@@ -1,0 +1,77 @@
+/* LoginPage.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ffffff;
+}
+
+.logoArea {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logoIcon {
+  margin-bottom: 10px;
+}
+
+.logoText {
+  font-size: 32px;
+  font-weight: bold;
+  font-style: italic;
+  color: #213fb5;
+  margin: 0;
+}
+
+.inputContainer {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.inputField {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #f0f0f0;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.loginButton {
+  width: 320px;
+  padding: 15px;
+  border-radius: 8px;
+  border: none;
+  background-color: #5c7cfa;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.linkArea {
+  margin-top: 15px;
+}
+
+.signupLink {
+  font-size: 14px;
+  color: #333;
+  text-decoration: underline;
+  cursor: pointer;
+}
+@media (max-width: 480px) {
+  .inputContainer, .loginButton {
+    width: 90%;
+    max-width: 320px;
+  }
+  
+  .logoText {
+    font-size: 28px;
+  }
+}
