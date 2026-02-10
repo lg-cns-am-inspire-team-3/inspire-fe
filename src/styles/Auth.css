@@ -1,0 +1,131 @@
+/* 공통 레이아웃 */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100dvh; /* 모바일 주소창 대응 */
+  background-color: #f4f7ff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.auth-card {
+  background: white;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.auth-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 35px;
+  color: #000;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 입력창 스타일 */
+.auth-input {
+  width: 100%;
+  padding: 16px;
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+/* 아이디 + 중복확인 버튼 */
+.input-with-button {
+  display: flex;
+  gap: 10px;
+}
+
+.check-button {
+  background-color: #7a97ff;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  border-radius: 10px;
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* 빨간색 에러 메시지 */
+.error-msg {
+  color: #ff4d4d;
+  font-size: 12px;
+  text-align: left;
+  margin: 0 0 8px 5px;
+  font-weight: 500;
+}
+
+/* 가입하기 버튼 */
+.auth-button {
+  width: 100%;
+  padding: 18px;
+  margin-top: 25px;
+  background-color: #5b7fff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.auth-footer {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+/* =========================================
+   모바일 반응형 스타일 (화면 너비 480px 이하)
+   ========================================= */
+@media (max-width: 480px) {
+  .auth-wrapper {
+    padding: 0;
+    background-color: #fff; /* 모바일은 배경 구분 없이 흰색으로 */
+  }
+
+  .auth-card {
+    padding: 40px 25px;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 100dvh; /* 모바일 전체 화면 꽉 채우기 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .auth-input {
+    font-size: 16px; /* 아이폰 입력창 줌 방지 */
+    padding: 14px;
+  }
+
+  .auth-title {
+    font-size: 22px;
+    margin-bottom: 25px;
+  }
+
+  .auth-button {
+    padding: 16px;
+    font-size: 16px;
+  }
+}
