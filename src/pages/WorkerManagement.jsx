@@ -45,7 +45,6 @@ function WorkerManagement() {
           <div className="left-section">
             <div className="section-header">
               <h3 className="section-title">근무자 관리</h3>
-              <button className="add-icon-btn">+</button>
             </div>
 
             <div className="worker-grid">
