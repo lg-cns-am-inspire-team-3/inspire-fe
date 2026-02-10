@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { adminApi } from '../api/adminApi';
+import LogoutModal from '../components/LogoutModal'; 
 import './WorkerManagement.css';
 
 function WorkerManagement() {
   const [workers, setWorkers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);  // 추가!
   const navigate = useNavigate();
 
   const [attendanceData] = useState([
@@ -17,19 +20,29 @@ function WorkerManagement() {
     { date: '12/14 (토)', checkIn: '00:00', checkOut: '00:00', pay: '0원' }
   ]);
 
-  // 알바생 목록 조회
   useEffect(() => {
     fetchWorkers();
   }, []);
 
   const fetchWorkers = async () => {
     try {
+      console.log('API 호출 시작...');
       const res = await adminApi.getAllUsers();
-      setWorkers(res.data);
+      console.log('받아온 데이터:', res.data);
+      
+      if (res.data && Array.isArray(res.data)) {
+        setWorkers(res.data);
+        console.log('Workers 설정 완료:', res.data);
+      } else {
+        console.error('데이터 형식 오류:', res.data);
+        setError('데이터 형식이 올바르지 않습니다.');
+      }
+      
       setLoading(false);
     } catch (err) {
       console.error('회원 조회 실패:', err);
-      alert('회원 목록을 불러오는데 실패했습니다.');
+      console.error('에러 상세:', err.response);
+      setError(err.message);
       setLoading(false);
     }
   };
@@ -42,10 +55,41 @@ function WorkerManagement() {
     navigate('/admin/register');
   };
 
+  // 로그아웃 처리 (추가!)
+ const handleLogout = () => {
+        // 1. 로컬스토리지에서 토큰 삭제
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        
+        // 2. 세션스토리지 삭제
+        sessionStorage.clear();
+        
+        // 3. 로그인 페이지로 이동
+        navigate('/login');
+};
+
   if (loading) {
     return (
       <div style={{ textAlign: 'center', padding: '100px' }}>
-        로딩중...
+        <p>로딩중...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ textAlign: 'center', padding: '100px' }}>
+        <p style={{ color: 'red' }}>에러 발생: {error}</p>
+        <button onClick={fetchWorkers}>다시 시도</button>
+      </div>
+    );
+  }
+
+  if (workers.length === 0) {
+    return (
+      <div style={{ textAlign: 'center', padding: '100px' }}>
+        <p>등록된 근무자가 없습니다.</p>
+        <button onClick={handleAddWorker}>근무자 추가하기</button>
       </div>
     );
   }
@@ -55,7 +99,10 @@ function WorkerManagement() {
       <div className="management-container">
         <div className="management-header">
           <h2 className="page-title">관리자-메인</h2>
-          <button className="logout-btn" onClick={() => navigate('/login')}>
+          <button 
+            className="logout-btn" 
+            onClick={() => setIsLogoutModalOpen(true)}  // 수정!
+          >
             로그아웃
           </button>
         </div>
@@ -64,7 +111,7 @@ function WorkerManagement() {
           {/* 왼쪽: 근무자 관리 */}
           <div className="left-section">
             <div className="section-header">
-              <h3 className="section-title">근무자 관리</h3>
+              <h3 className="section-title">근무자 관리 ({workers.length}명)</h3>
               <button className="add-icon-btn" onClick={handleAddWorker}>+</button>
             </div>
 
@@ -76,7 +123,7 @@ function WorkerManagement() {
                   onClick={() => handleWorkerClick(worker.id)}
                 >
                   <div className="worker-icon">😊</div>
-                  <p className="worker-name">{worker.name}</p>
+                  <p className="worker-name">{worker.name || '이름없음'}</p>
                 </div>
               ))}
             </div>
@@ -121,6 +168,13 @@ function WorkerManagement() {
           </div>
         </div>
       </div>
+
+      {/* 로그아웃 모달 */}
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogout}
+      />
     </div>
   );
 }
