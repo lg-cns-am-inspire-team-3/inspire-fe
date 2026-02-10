@@ -1,15 +1,23 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { adminApi } from '../api/adminApi';
-import LogoutModal from '../components/LogoutModal'; 
+import { useState } from 'react';
 import './WorkerManagement.css';
+import LogoutModal from '../components/LogoutModal';
+import NewWorkerAddModal from '../components/NewWorkerAddModal';
 
 function WorkerManagement() {
-  const [workers, setWorkers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);  // 추가!
-  const navigate = useNavigate();
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const [isAddOpen, setIsAddOpen] = useState(false);
+
+
+  const [workers, setWorkers] = useState([
+    { id: 1, name: '근무자1' },
+    { id: 2, name: '근무자2' },
+    { id: 3, name: '근무자3' },
+    { id: 4, name: '근무자4' },
+    { id: 5, name: '근무자5' },
+    { id: 6, name: '근무자6' },
+    { id: 7, name: '근무자7' },
+    { id: 8, name: '근무자8' },
+  ]);
 
   const [attendanceData] = useState([
     { date: '12/9 (월)', checkIn: '10:00', checkOut: '20:00', pay: '84,000원' },
@@ -20,117 +28,41 @@ function WorkerManagement() {
     { date: '12/14 (토)', checkIn: '00:00', checkOut: '00:00', pay: '0원' }
   ]);
 
-  useEffect(() => {
-    fetchWorkers();
-  }, []);
-
-  const fetchWorkers = async () => {
-    try {
-      console.log('API 호출 시작...');
-      const res = await adminApi.getAllUsers();
-      console.log('받아온 데이터:', res.data);
-      
-      if (res.data && Array.isArray(res.data)) {
-        setWorkers(res.data);
-        console.log('Workers 설정 완료:', res.data);
-      } else {
-        console.error('데이터 형식 오류:', res.data);
-        setError('데이터 형식이 올바르지 않습니다.');
-      }
-      
-      setLoading(false);
-    } catch (err) {
-      console.error('회원 조회 실패:', err);
-      console.error('에러 상세:', err.response);
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
-  const handleWorkerClick = (workerId) => {
-    navigate(`/admin/worker/${workerId}`);
-  };
-
-  const handleAddWorker = () => {
-    navigate('/admin/register');
-  };
-
-  // 로그아웃 처리 (추가!)
- const handleLogout = () => {
-        // 1. 로컬스토리지에서 토큰 삭제
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        
-        // 2. 세션스토리지 삭제
-        sessionStorage.clear();
-        
-        // 3. 로그인 페이지로 이동
-        navigate('/login');
-};
-
-  if (loading) {
-    return (
-      <div style={{ textAlign: 'center', padding: '100px' }}>
-        <p>로딩중...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div style={{ textAlign: 'center', padding: '100px' }}>
-        <p style={{ color: 'red' }}>에러 발생: {error}</p>
-        <button onClick={fetchWorkers}>다시 시도</button>
-      </div>
-    );
-  }
-
-  if (workers.length === 0) {
-    return (
-      <div style={{ textAlign: 'center', padding: '100px' }}>
-        <p>등록된 근무자가 없습니다.</p>
-        <button onClick={handleAddWorker}>근무자 추가하기</button>
-      </div>
-    );
-  }
-
   return (
     <div className="management-page">
       <div className="management-container">
         <div className="management-header">
           <h2 className="page-title">관리자-메인</h2>
-          <button 
-            className="logout-btn" 
-            onClick={() => setIsLogoutModalOpen(true)}  // 수정!
-          >
+          <button
+            className="logout-btn"
+            onClick={() => setIsLogoutOpen(true)}>
             로그아웃
-          </button>
+            </button>
         </div>
 
         <div className="management-content">
           {/* 왼쪽: 근무자 관리 */}
           <div className="left-section">
             <div className="section-header">
-              <h3 className="section-title">근무자 관리 ({workers.length}명)</h3>
-              <button className="add-icon-btn" onClick={handleAddWorker}>+</button>
+              <h3 className="section-title">근무자 관리</h3>
+              <button className="add-icon-btn">+</button>
             </div>
 
             <div className="worker-grid">
               {workers.map(worker => (
-                <div 
-                  key={worker.id} 
-                  className="worker-card"
-                  onClick={() => handleWorkerClick(worker.id)}
-                >
+                <div key={worker.id} className="worker-card">
                   <div className="worker-icon">😊</div>
-                  <p className="worker-name">{worker.name || '이름없음'}</p>
+                  <p className="worker-name">{worker.name}</p>
                 </div>
               ))}
             </div>
 
-            <button className="manage-btn" onClick={handleAddWorker}>
-              근무자 추가
-            </button>
+                <button
+                className="manage-btn"
+                onClick={() => setIsAddOpen(true)}
+                >
+                근무자 추가
+                </button>
           </div>
 
           {/* 오른쪽: 출퇴근 관리 */}
@@ -169,12 +101,30 @@ function WorkerManagement() {
         </div>
       </div>
 
-      {/* 로그아웃 모달 */}
       <LogoutModal
-        isOpen={isLogoutModalOpen}
-        onClose={() => setIsLogoutModalOpen(false)}
-        onConfirm={handleLogout}
+        isOpen={isLogoutOpen}
+        onClose={() => setIsLogoutOpen(false)}
+        onConfirm={() => {
+          setIsLogoutOpen(false);
+          alert('로그아웃 되었습니다');
+        }}
       />
+
+        <NewWorkerAddModal
+            isOpen={isAddOpen}
+            onClose={() => setIsAddOpen(false)}
+            onSubmit={(data) => {
+                // 🔥 새 근무자 객체 생성
+                const newWorker = {
+                id: Date.now(), // 임시 ID
+                name: data.name
+                };
+
+                // 🔥 기존 근무자 + 새 근무자 추가
+                setWorkers((prev) => [...prev, newWorker]);
+            }}
+        />
+
     </div>
   );
 }
