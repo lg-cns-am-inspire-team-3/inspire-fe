@@ -5,6 +5,28 @@ const QrScanner = () => {
   const scannerRef = useRef(null);
   const [qrToken, setQrToken] = useState("");
   const [isScanning, setIsScanning] = useState(false);
+  const hasSentRef = useRef(false);
+
+  const sendQrTokenToServer = async (qrToken) => {
+    try {
+      const response = await fetch("http://localhost:8081/api/v1/attend/test", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          qrToken: qrToken,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error("서버 전송 실패");
+      }
+    } catch (error) {
+      console.error("서버 요청 에러", error);
+    }
+  };
+
 
   useEffect(() => {
     const html5QrCode = new Html5Qrcode("qr-reader");
@@ -28,13 +50,14 @@ const QrScanner = () => {
         { facingMode: "environment" }, // 후면 카메라
         { fps: 10, qrbox: 250 },
         (decodedText) => {
-          console.log("QR Token:", decodedText);
-          setQrToken(decodedText);
+            if (hasSentRef.current) return;
 
-          // 한 번 읽으면 스캔 중지
-          scannerRef.current.stop();
-          setIsScanning(false);
-        },
+            hasSentRef.current = true;
+            sendQrTokenToServer(decodedText);
+
+            scannerRef.current.stop();
+            setIsScanning(false);
+          },
         (error) => {
           // 스캔 실패 로그 (무시해도 됨)
         }
@@ -65,6 +88,8 @@ const QrScanner = () => {
       )}
     </div>
   );
+
+
 };
 
 export default QrScanner;
