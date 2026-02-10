@@ -1,0 +1,167 @@
+.detail-page {
+  min-height: 100vh;
+  background-color: #F5F5F5;
+  padding: 30px 20px;
+}
+
+.detail-container {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.back-btn,
+.delete-btn {
+  background: white;
+  border: 1px solid #E0E0E0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.back-btn:hover,
+.delete-btn:hover {
+  background-color: #F9F9F9;
+}
+
+.detail-page-title {
+  font-size: 16px;
+  color: #999;
+  font-weight: 400;
+  margin: 0 0 24px 0;
+}
+
+.worker-info-card {
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.worker-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #E8EAFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.worker-info {
+  flex: 1;
+}
+
+.worker-info-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 4px 0;
+}
+
+.worker-info-phone {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+.schedule-section {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.schedule-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 16px 0;
+}
+
+.schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.schedule-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #F5F5F5;
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.schedule-date {
+  font-size: 13px;
+}
+
+.date-bold {
+  font-weight: 600;
+  color: #333;
+}
+
+.date-gray {
+  color: #999;
+}
+
+.schedule-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.schedule-pay {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.total-pay-section {
+  background: #5B6FED;
+  padding: 28px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(91, 111, 237, 0.3);
+}
+
+.total-pay-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 8px 0;
+}
+
+.total-pay-amount {
+  font-size: 32px;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
