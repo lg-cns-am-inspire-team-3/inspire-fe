@@ -1,7 +1,14 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './WorkerDetail.css';
+import DeleteWorkerModal from '../components/DeleteWorkerModal';
 
 function WorkerDetail() {
+  const navigate = useNavigate();
+
+  // 🔥 삭제 모달 열림 여부
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
   const [workerInfo] = useState({
     name: '근무자1',
     phone: '010-1234-5678'
@@ -19,8 +26,21 @@ function WorkerDetail() {
     <div className="detail-page">
       <div className="detail-container">
         <div className="detail-header">
-          <button className="back-btn">← 근무자 목록</button>
-          <button className="delete-btn">근무자 삭제</button>
+          {/* 🔥 근무자 목록으로 이동 */}
+          <button
+            className="back-btn"
+            onClick={() => navigate('/admin/workers')}
+          >
+            ← 근무자 목록
+          </button>
+
+          {/* 🔥 삭제 모달 열기 */}
+          <button
+            className="delete-btn"
+            onClick={() => setIsDeleteOpen(true)}
+          >
+            근무자 삭제
+          </button>
         </div>
 
         <h2 className="detail-page-title">관리자-근무자관리 상세</h2>
@@ -59,6 +79,19 @@ function WorkerDetail() {
           <p className="total-pay-amount">825,000원</p>
         </div>
       </div>
+
+      {/* 🔥 근무자 삭제 모달 */}
+      <DeleteWorkerModal
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+        onConfirm={() => {
+          setIsDeleteOpen(false);
+          alert('근무자가 삭제되었습니다');
+
+          // 🔥 삭제 후 목록 페이지로 이동
+          navigate('/admin/workers');
+        }}
+      />
     </div>
   );
 }
