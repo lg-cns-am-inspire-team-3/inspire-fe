@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './WorkerManagement.css';
 import LogoutModal from '../components/LogoutModal';
 import NewWorkerAddModal from '../components/NewWorkerAddModal';
 
 function WorkerManagement() {
+  const navigate = useNavigate(); 
+
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const [isAddOpen, setIsAddOpen] = useState(false);
-
 
   const [workers, setWorkers] = useState([
     { id: 1, name: '근무자1' },
@@ -35,9 +37,10 @@ function WorkerManagement() {
           <h2 className="page-title">관리자-메인</h2>
           <button
             className="logout-btn"
-            onClick={() => setIsLogoutOpen(true)}>
+            onClick={() => setIsLogoutOpen(true)}
+          >
             로그아웃
-            </button>
+          </button>
         </div>
 
         <div className="management-content">
@@ -47,21 +50,26 @@ function WorkerManagement() {
               <h3 className="section-title">근무자 관리</h3>
             </div>
 
+            {/* 🔥 근무자 카드 */}
             <div className="worker-grid">
               {workers.map(worker => (
-                <div key={worker.id} className="worker-card">
+                <div
+                  key={worker.id}
+                  className="worker-card"
+                  onClick={() => navigate(`/admin/workers/${worker.id}`)} // 🔥 여기!!
+                >
                   <div className="worker-icon">😊</div>
                   <p className="worker-name">{worker.name}</p>
                 </div>
               ))}
             </div>
 
-                <button
-                className="manage-btn"
-                onClick={() => setIsAddOpen(true)}
-                >
-                근무자 추가
-                </button>
+            <button
+              className="manage-btn"
+              onClick={() => setIsAddOpen(true)}
+            >
+              근무자 추가
+            </button>
           </div>
 
           {/* 오른쪽: 출퇴근 관리 */}
@@ -100,6 +108,7 @@ function WorkerManagement() {
         </div>
       </div>
 
+      {/* 로그아웃 모달 */}
       <LogoutModal
         isOpen={isLogoutOpen}
         onClose={() => setIsLogoutOpen(false)}
@@ -109,23 +118,21 @@ function WorkerManagement() {
         }}
       />
 
-        <NewWorkerAddModal
-            isOpen={isAddOpen}
-            onClose={() => setIsAddOpen(false)}
-            onSubmit={(data) => {
-                // 🔥 새 근무자 객체 생성
-                const newWorker = {
-                id: Date.now(), // 임시 ID
-                name: data.name
-                };
-
-                // 🔥 기존 근무자 + 새 근무자 추가
-                setWorkers((prev) => [...prev, newWorker]);
-            }}
-        />
-
+      {/* 근무자 추가 모달 */}
+      <NewWorkerAddModal
+        isOpen={isAddOpen}
+        onClose={() => setIsAddOpen(false)}
+        onSubmit={(data) => {
+          const newWorker = {
+            id: Date.now(),
+            name: data.name
+          };
+          setWorkers(prev => [...prev, newWorker]);
+        }}
+      />
     </div>
   );
 }
 
 export default WorkerManagement;
+
