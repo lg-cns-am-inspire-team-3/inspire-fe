@@ -2,17 +2,22 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './WorkerManagement.css';
 import LogoutModal from '../components/LogoutModal';
-import NewWorkerAddModal from '../components/NewWorkerAddModal';
+import WorkerApproveModal from '../components/WorkerApproveModal';
 
 function WorkerManagement() {
   const navigate = useNavigate(); 
 
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
-  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [isAddOpen, setIsAddOpen] = useState(false); // 👉 승인 모달
 
+  // ✅ 승인 완료된 근무자 (카드에 보임)
   const [workers, setWorkers] = useState([
     { id: 1, name: '근무자1' },
     { id: 2, name: '근무자2' },
+  ]);
+
+  // ✅ 승인 대기 근무자 (모달에만 보임)
+  const [pendingWorkers, setPendingWorkers] = useState([
     { id: 3, name: '근무자3' },
     { id: 4, name: '근무자4' },
     { id: 5, name: '근무자5' },
@@ -29,6 +34,21 @@ function WorkerManagement() {
     { date: '12/13 (금)', checkIn: '10:00', checkOut: '20:00', pay: '0원' },
     { date: '12/14 (토)', checkIn: '00:00', checkOut: '00:00', pay: '0원' }
   ]);
+
+  // ✅ 근무자 승인 처리 (핵심 로직)
+  const handleApprove = (workerId) => {
+    const approvedWorker = pendingWorkers.find(
+      worker => worker.id === workerId
+    );
+
+    // 1️⃣ 승인 완료 목록에 추가
+    setWorkers(prev => [...prev, approvedWorker]);
+
+    // 2️⃣ 승인 대기 목록에서 제거
+    setPendingWorkers(prev =>
+      prev.filter(worker => worker.id !== workerId)
+    );
+  };
 
   return (
     <div className="management-page">
@@ -50,13 +70,13 @@ function WorkerManagement() {
               <h3 className="section-title">근무자 관리</h3>
             </div>
 
-            {/* 🔥 근무자 카드 */}
+            {/* ✅ 승인 완료된 근무자 카드 */}
             <div className="worker-grid">
               {workers.map(worker => (
                 <div
                   key={worker.id}
                   className="worker-card"
-                  onClick={() => navigate(`/admin/workers/${worker.id}`)} // 🔥 여기!!
+                  onClick={() => navigate(`/admin/workers/${worker.id}`)}
                 >
                   <div className="worker-icon">😊</div>
                   <p className="worker-name">{worker.name}</p>
@@ -68,7 +88,7 @@ function WorkerManagement() {
               className="manage-btn"
               onClick={() => setIsAddOpen(true)}
             >
-              근무자 추가
+              근무자 승인
             </button>
           </div>
 
@@ -118,21 +138,15 @@ function WorkerManagement() {
         }}
       />
 
-      {/* 근무자 추가 모달 */}
-      <NewWorkerAddModal
+      {/* ✅ 근무자 승인 모달 */}
+      <WorkerApproveModal
         isOpen={isAddOpen}
+        workers={pendingWorkers}   // 🔥 핵심 변경
         onClose={() => setIsAddOpen(false)}
-        onSubmit={(data) => {
-          const newWorker = {
-            id: Date.now(),
-            name: data.name
-          };
-          setWorkers(prev => [...prev, newWorker]);
-        }}
+        onApprove={handleApprove}
       />
     </div>
   );
 }
 
 export default WorkerManagement;
-
