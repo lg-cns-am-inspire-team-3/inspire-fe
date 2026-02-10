@@ -1,0 +1,96 @@
+.edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.edit-modal-container {
+  background: white;
+  width: 360px;
+  padding: 28px 24px;
+  border-radius: 12px;
+  box-sizing: border-box; 
+}
+
+
+.edit-modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.edit-label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.edit-input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.edit-input:focus {
+  outline: none;
+  border-color: #5b6fed;
+}
+
+.edit-btn-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: #5b6fed;
+  color: white;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.worker-info-wage {
+  font-size: 14px;
+  color: #444;
+  margin-top: 6px;
+}
+
+.worker-edit-btn {
+  margin-top: 12px;
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #5b6fed;
+  background: #f4f6ff;
+  color: #5b6fed;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.worker-edit-btn:hover {
+  background: #5b6fed;
+  color: white;
+}
+

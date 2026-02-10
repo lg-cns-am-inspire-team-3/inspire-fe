@@ -165,3 +165,38 @@
   color: white;
   margin: 0;
 }
+
+.worker-info-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.worker-info-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.worker-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.worker-edit-btn {
+  padding: 8px 14px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid #5b6fed;
+  background: #f4f6ff;
+  color: #5b6fed;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.worker-edit-btn:hover {
+  background: #5b6fed;
+  color: white;
+}
