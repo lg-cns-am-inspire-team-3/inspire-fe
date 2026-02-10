@@ -53,8 +53,6 @@ function WorkerDetail() {
           </button>
         </div>
 
-        <h2 className="detail-page-title">관리자-근무자관리 상세</h2>
-
         <div className="worker-info-card">
         <div className="worker-avatar">😊</div>
 

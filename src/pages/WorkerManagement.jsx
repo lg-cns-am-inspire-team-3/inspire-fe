@@ -54,7 +54,6 @@ function WorkerManagement() {
     <div className="management-page">
       <div className="management-container">
         <div className="management-header">
-          <h2 className="page-title">관리자-메인</h2>
           <button
             className="logout-btn"
             onClick={() => setIsLogoutOpen(true)}
