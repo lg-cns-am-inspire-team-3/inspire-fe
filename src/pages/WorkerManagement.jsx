@@ -138,7 +138,7 @@ const fetchMonthlyTotal = async () => {
                     <td className="table-td">{record.name}</td>
                     <td className="table-td">{record.checkIn}</td>
                     <td className="table-td">{record.checkOut}</td>
-                    <td className="table-td">{record.payTotal?.toLocaleString()} 원</td>
+                    <td className="table-td">{record.monthlyPay?.toLocaleString()} 원</td>
                   </tr>
                 ))}
               </tbody>
