@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './WorkerManagement.css';
 import LogoutModal from '../components/LogoutModal';
@@ -26,14 +27,8 @@ function WorkerManagement() {
     { id: 8, name: '근무자8' },
   ]);
 
-  const [attendanceData] = useState([
-    { name: '근무자1', checkIn: '10:00', checkOut: '20:00', paytotal: '84,000원' },
-    { name: '근무자2', checkIn: '12:00', checkOut: '20:00', paytotal: '42,000원' },
-    { name: '근무자3', checkIn: '10:00', checkOut: '22:00', paytotal: '82,000원' },
-    { name: '근무자4', checkIn: '12:00', checkOut: '00:00', paytotal: '42,000원' },
-    { name: '근무자5', checkIn: '10:00', checkOut: '20:00', paytotal: '0원' },
-    { name: '근무자6', checkIn: '00:00', checkOut: '00:00', paytotal: '0원' }
-  ]);
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [monthlyTotal, setMonthlyTotal] = useState(0);
 
   // ✅ 근무자 승인 처리 (핵심 로직)
   const handleApprove = (workerId) => {
@@ -49,6 +44,36 @@ function WorkerManagement() {
       prev.filter(worker => worker.id !== workerId)
     );
   };
+
+  useEffect(() => {
+  fetchMonthlyAttendance();
+  fetchMonthlyTotal();
+}, []);
+
+const fetchMonthlyAttendance = async () => {
+  try {
+    const response = await axios.get(
+      '/api/v1/admin/attendances/monthly'
+    );
+
+    setAttendanceData(response.data);
+  } catch (error) {
+    console.error('출퇴근 데이터 불러오기 실패', error);
+  }
+};
+
+const fetchMonthlyTotal = async () => {
+  try {
+    const response = await axios.get(
+      '/api/v1/admin/attendances/monthly/total'
+    );
+
+    setMonthlyTotal(response.data);
+  } catch (error) {
+    console.error('총 급여 불러오기 실패', error);
+  }
+};
+
 
   return (
     <div className="management-page">
@@ -113,7 +138,7 @@ function WorkerManagement() {
                     <td className="table-td">{record.name}</td>
                     <td className="table-td">{record.checkIn}</td>
                     <td className="table-td">{record.checkOut}</td>
-                    <td className="table-td">{record.paytotal}</td>
+                    <td className="table-td">{record.payTotal?.toLocaleString()} 원</td>
                   </tr>
                 ))}
               </tbody>
@@ -121,7 +146,7 @@ function WorkerManagement() {
 
             <div className="total-section">
               <p className="total-label">이번 달 총 급여</p>
-              <p className="total-amount">42,000,000 원</p>
+              <p className="total-amount"> {monthlyTotal.toLocaleString()} 원</p>
             </div>
           </div>
         </div>
