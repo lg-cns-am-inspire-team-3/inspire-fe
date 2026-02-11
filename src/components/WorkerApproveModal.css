@@ -1,0 +1,89 @@
+/* 전체 배경 */
+.approve-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* 모달 박스 */
+.approve-modal-container {
+  width: 360px;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* 제목 */
+.approve-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* 근무자 리스트 */
+.approve-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 근무자 한 줄 카드 */
+.approve-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f8fa;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* 이름 */
+.approve-name {
+  font-weight: 600;
+  color: #333;
+}
+
+/* 승인 버튼 */
+.approve-btn {
+  background: #4f46e5; /* 👉 포인트 컬러 */
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.approve-btn:hover {
+  background: #4338ca;
+}
+
+/* 대기 없음 */
+.approve-empty {
+  text-align: center;
+  color: #888;
+  margin: 20px 0;
+}
+
+/* 닫기 버튼 */
+.approve-close-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.approve-close-btn:hover {
+  background: #d1d5db;
+}
