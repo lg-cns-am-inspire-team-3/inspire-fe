@@ -1,0 +1,76 @@
+.logout-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.logout-modal-container {
+  background: white;
+  padding: 32px 28px;
+  border-radius: 12px;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.logout-modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.logout-modal-message {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+  text-align: center;
+}
+
+.logout-modal-button-group {
+  display: flex;
+  gap: 10px;
+}
+
+.logout-modal-btn-no {
+  flex: 1;
+  padding: 12px;
+  background: white;
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.logout-modal-btn-no:hover {
+  background-color: #F9F9F9;
+}
+
+.logout-modal-btn-yes {
+  flex: 1;
+  padding: 12px;
+  background: #5B6FED;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  transition: all 0.2s;
+}
+
+.logout-modal-btn-yes:hover {
+  background: #4A5DD9;
+}
