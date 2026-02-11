@@ -78,7 +78,7 @@ function WorkerDetail() {
 
         {/* 출근 기록 */}
         <div className="schedule-section">
-          <h3 className="schedule-section-title">최근 출근 아이템</h3>
+          <h3 className="schedule-section-title">최근 출퇴근 이력</h3>
           <div className="schedule-list">
             {schedules.map((schedule, index) => (
               <div key={index} className="schedule-item">

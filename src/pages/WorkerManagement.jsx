@@ -27,12 +27,12 @@ function WorkerManagement() {
   ]);
 
   const [attendanceData] = useState([
-    { date: '12/9 (월)', checkIn: '10:00', checkOut: '20:00', pay: '84,000원' },
-    { date: '12/10 (화)', checkIn: '12:00', checkOut: '20:00', pay: '42,000원' },
-    { date: '12/11 (수)', checkIn: '10:00', checkOut: '22:00', pay: '42,000원' },
-    { date: '12/12 (목)', checkIn: '12:00', checkOut: '00:00', pay: '42,000원' },
-    { date: '12/13 (금)', checkIn: '10:00', checkOut: '20:00', pay: '0원' },
-    { date: '12/14 (토)', checkIn: '00:00', checkOut: '00:00', pay: '0원' }
+    { name: '근무자1', checkIn: '10:00', checkOut: '20:00', paytotal: '84,000원' },
+    { name: '근무자2', checkIn: '12:00', checkOut: '20:00', paytotal: '42,000원' },
+    { name: '근무자3', checkIn: '10:00', checkOut: '22:00', paytotal: '82,000원' },
+    { name: '근무자4', checkIn: '12:00', checkOut: '00:00', paytotal: '42,000원' },
+    { name: '근무자5', checkIn: '10:00', checkOut: '20:00', paytotal: '0원' },
+    { name: '근무자6', checkIn: '00:00', checkOut: '00:00', paytotal: '0원' }
   ]);
 
   // ✅ 근무자 승인 처리 (핵심 로직)
@@ -94,26 +94,26 @@ function WorkerManagement() {
           {/* 오른쪽: 출퇴근 관리 */}
           <div className="right-section">
             <div className="attendance-header">
-              <h3 className="section-title">근무자 출퇴근 아이템별</h3>
-              <p className="week-info">1주차 근무 아이템 제목</p>
+              <h3 className="section-title">근무자 출퇴근 이력관리</h3>
+              <p className="week-info">2026년 2월 5일 목요일</p>
             </div>
 
             <table className="attendance-table">
               <thead>
                 <tr className="table-header">
-                  <th className="table-th">날짜</th>
+                  <th className="table-th">이름</th>
                   <th className="table-th">출근시간</th>
                   <th className="table-th">퇴근시간</th>
-                  <th className="table-th">시급 (8 시간이상)</th>
+                  <th className="table-th">이번 달 예상급여</th>
                 </tr>
               </thead>
               <tbody>
                 {attendanceData.map((record, index) => (
                   <tr key={index} className="table-row">
-                    <td className="table-td">{record.date}</td>
+                    <td className="table-td">{record.name}</td>
                     <td className="table-td">{record.checkIn}</td>
                     <td className="table-td">{record.checkOut}</td>
-                    <td className="table-td">{record.pay}</td>
+                    <td className="table-td">{record.paytotal}</td>
                   </tr>
                 ))}
               </tbody>
