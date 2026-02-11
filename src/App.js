@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // 1. 파일명 대소문자를 꼭 확인하세요! (실제 파일이 SignUpPage.jsx라면 아래처럼)
@@ -7,10 +8,14 @@ import SignUpPage from './pages/SignUpPage';
 import './App.css';
 import AttendanceScanPage from './pages/AttendanceScanPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+=======
+import LoginPage from './pages/LoginPage';
+>>>>>>> origin/feature/auth-yeonjin
 
 function App() {
   return (
     <div className="App">
+<<<<<<< HEAD
     <BrowserRouter>
       <Routes>
         <Route path="/attendance/scan" element={<AttendanceScanPage />} />
@@ -22,6 +27,9 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
     </BrowserRouter>
+=======
+      <LoginPage />
+>>>>>>> origin/feature/auth-yeonjin
     </div>
   );
 }
