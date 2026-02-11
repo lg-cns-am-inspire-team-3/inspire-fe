@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
@@ -38,9 +37,4 @@ function App() {
   );
 }
 
-<<<<<<< HEAD
 export default App;
-=======
-export default App;
-
->>>>>>> origin/admin-hyebin

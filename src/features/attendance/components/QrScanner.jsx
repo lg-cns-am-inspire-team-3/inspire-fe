@@ -9,7 +9,7 @@ const QrScanner = () => {
 
   const sendQrTokenToServer = async (qrToken) => {
     try {
-      const response = await fetch("http://localhost:8081/api/v1/attend/test", {
+      const response = await fetch("http://localhost:8081/api/v1/attend/check", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

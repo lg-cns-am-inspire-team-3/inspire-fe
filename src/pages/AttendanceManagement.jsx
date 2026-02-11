@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './AttendanceManagement.css';
+import QrScanner from '../features/attendance/components/QrScanner';
 
 function AttendanceManagement() {
   // 더미 데이터
@@ -22,6 +23,10 @@ function AttendanceManagement() {
       <div className="attendance-container">
         <h2>근무자 출퇴근 아이템별</h2>
         <p className="week-label">{attendanceData.week}</p>
+
+        <div className="attendance-action-section">
+          <QrScanner />
+        </div>
 
         <div className="attendance-table-wrapper">
           <table className="attendance-table">
