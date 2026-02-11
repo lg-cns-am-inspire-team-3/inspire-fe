@@ -53,7 +53,7 @@ function WorkerManagement() {
 const fetchMonthlyAttendance = async () => {
   try {
     const response = await axios.get(
-      '/api/v1/admin/attendances/monthly'
+      'http://localhost:8080/api/v1/admin/users/attendances'
     );
 
     setAttendanceData(response.data);
@@ -65,10 +65,10 @@ const fetchMonthlyAttendance = async () => {
 const fetchMonthlyTotal = async () => {
   try {
     const response = await axios.get(
-      '/api/v1/admin/attendances/monthly/total'
+      'http://localhost:8080/api/v1/admin/users/attendances/monthly-total'
     );
 
-    setMonthlyTotal(response.data);
+    setMonthlyTotal(response.data.totalAmount);
   } catch (error) {
     console.error('총 급여 불러오기 실패', error);
   }
