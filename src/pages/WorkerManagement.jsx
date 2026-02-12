@@ -5,6 +5,7 @@ import LogoutModal from '../components/LogoutModal';
 import WorkerApproveModal from '../components/WorkerApproveModal';
 // ✅ [확인] adminApi.js 파일명과 경로가 일치하는지 확인하세요.
 import { adminApi } from '../api/adminApi';
+import dateParser from '../utils/dateParser';
 
 function WorkerManagement() {
   const navigate = useNavigate();
@@ -16,27 +17,35 @@ function WorkerManagement() {
   const [workers, setWorkers] = useState([]); // 승인 완료(ACTIVE) 근무자 리스트
   const [pendingWorkers, setPendingWorkers] = useState([]); // 승인 대기(SUSPENDED) 근무자 리스트
 
+  const [attendanceData, setAttendanceData] = useState([]);
+
+
   // ✅ 페이지 로드 시 실시간 데이터 로딩
   useEffect(() => {
     fetchWorkerData();
   }, []);
 
   const fetchWorkerData = async () => {
+    const now = new Date();
     try {
       // ✅ [수정] 백엔드에서 분리한 두 개의 API를 병렬로 호출하여 성능 최적화
-      const [activeRes, suspendedRes] = await Promise.all([
+      const [activeRes, suspendedRes, attendanceData] = await Promise.all([
         adminApi.getActiveUsers(),       // 백엔드의 getActiveUsers()와 연결
-        adminApi.getSuspendedUsers()  // 백엔드의 getSuspendedUsers()와 연결
+        adminApi.getSuspendedUsers(),  // 백엔드의 getSuspendedUsers()와 연결
+        //adminApi.getAttends(undefined, now.getFullYear(), now.getMonth() + 1, now.getDate())
+        adminApi.getAttends(undefined, 2020, 12, 25)
       ]);
 
       // ✅ [디버깅] 데이터 구조 확인용 로그 (나중에 지우셔도 됩니다)
       console.log("ACTIVE 응답:", activeRes.data);
       console.log("SUSPENDED 응답:", suspendedRes.data);
+      console.log("All Attends 응답:", attendanceData.data);
 
       // ✅ [수정] 백엔드가 이미 필터링해서 줬으므로 프론트 필터 없이 그대로 저장
       // 데이터가 없을 경우를 대비해 빈 배열([])을 기본값으로 설정합니다.
       setWorkers(activeRes.data || []);
       setPendingWorkers(suspendedRes.data || []);
+      setAttendanceData(attendanceData.data || []);
 
     } catch (error) {
       console.error("데이터 로딩 중 에러 발생:", error);
@@ -65,12 +74,6 @@ function WorkerManagement() {
       alert("승인 처리 중 서버 오류가 발생했습니다.");
     }
   };
-
-  // ✅ 출퇴근 샘플 데이터 (추후 API 연동 예정)
-  const [attendanceData] = useState([
-    { name: '근무자1', checkIn: '10:00', checkOut: '20:00', paytotal: '84,000원' },
-    { name: '근무자2', checkIn: '12:00', checkOut: '20:00', paytotal: '42,000원' },
-  ]);
 
   return (
     <div className="management-page">
@@ -130,10 +133,10 @@ function WorkerManagement() {
               <tbody>
                 {attendanceData.map((record, index) => (
                   <tr key={index} className="table-row">
-                    <td className="table-td">{record.name}</td>
+                    <td className="table-td">{record.userName}</td>
                     <td className="table-td">{record.checkIn}</td>
                     <td className="table-td">{record.checkOut}</td>
-                    <td className="table-td">{record.monthlyPay?.toLocaleString()} 원</td>
+                    <td className="table-td">{record.wage?.toLocaleString()} 원</td>
                   </tr>
                 ))}
               </tbody>

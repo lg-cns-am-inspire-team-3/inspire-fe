@@ -7,7 +7,7 @@ export default function ProtectedRoute({ children }) {
     const { isLogin, role } = useAuth();
 
     if (!isLogin || role !== "ADMIN") {
-        return <Navigate to="/mypage" />;
+        return <Navigate to="/" />;
     }
 
     return children;

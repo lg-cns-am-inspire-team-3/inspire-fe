@@ -5,6 +5,8 @@ import DeleteWorkerModal from '../components/DeleteWorkerModal';
 import WorkerEditModal from '../components/WorkerEditModal';
 // ✅ [추가] 백엔드 통신을 위한 API 임포트
 import { adminApi } from '../api/adminApi';
+import dateParser from '../utils/dateParser';
+
 
 function WorkerDetail() {
   const navigate = useNavigate();
@@ -129,11 +131,11 @@ function WorkerDetail() {
               <div key={index} className="schedule-item">
                 <div className="schedule-left">
                   <span className="schedule-date">
-                    <strong>{schedule.date}</strong> {schedule.day}
+                    <strong>{dateParser.getMonthFromDateTime(schedule.workDate) + '.' + dateParser.getDayFromDateTime(schedule.workDate)}</strong>
                   </span>
-                  <span className="schedule-time">{schedule.time}</span>
+                  <span className="schedule-time">{schedule.checkIn + '~' + schedule.checkOut}</span>
                 </div>
-                <span className="schedule-pay">{schedule.pay}</span>
+                <span className="schedule-pay">{schedule.wage}</span>
               </div>
             ))}
           </div>

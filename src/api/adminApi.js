@@ -15,12 +15,12 @@ export const adminApi = {
   approveUser: (id) => api.patch(`/api/v1/admin/users/${id}`,
     {
       status: 'active'
-    }, 
+    },
     {
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }),
 
   // 5. 회원 정보 수정 및 시급 설정
   updateUser: (id, userData) => api.patch(`/api/v1/admin/users/${id}`, userData),
@@ -29,10 +29,15 @@ export const adminApi = {
   deleteUser: (id) => api.delete(`/api/v1/admin/users/${id}`),
 
   // 7. 모든 출결 조회 (id, (year, month)) 조건 가능
-  getAttends: (userId, year, month) => api.get(`/api/v1/admin/attends`, {
-    params: {
-      userId, year, month
-    }
-  })
+  getAttends: (userId, year, month, day) => {
+    const params = {};
+    if (userId) { params.userId = userId; }
+    if (year) { params.year = year; }
+    if (month) { params.month = month; }
+    if (day) { params.day = day; }
 
+    return api.get('/api/v1/admin/attends', {
+      params
+    });
+  }
 };
