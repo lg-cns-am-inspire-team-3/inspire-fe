@@ -1,6 +1,8 @@
 import './LogoutModal.css';
+import { useLogout } from '../auth/logout';
 
 function LogoutModal({ isOpen, onClose, onConfirm }) {
+
   if (!isOpen) return null;
 
   return (

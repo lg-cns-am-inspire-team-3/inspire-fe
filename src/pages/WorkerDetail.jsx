@@ -15,32 +15,37 @@ function WorkerDetail() {
 
   // ✅ [수정] 임시 데이터 대신 상태(State)로 관리
   const [workerInfo, setWorkerInfo] = useState(null);
+  const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // ✅ [추가] 페이지 로드 시 백엔드에서 상세 정보 가져오기
   useEffect(() => {
-    const fetchDetail = async () => {
+    const fetchData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-        // GET /api/v1/admin/users/{id} 호출
-        const response = await adminApi.getUserDetail(id);
-        setWorkerInfo(response.data);
+        const [detailRes, attendsRes] = await Promise.all([
+          adminApi.getUserDetail(id),
+          adminApi.getAttends(id, null, null),
+        ]);
+
+        setWorkerInfo(detailRes.data);
+        setSchedules(attendsRes.data);
       } catch (error) {
         console.error("데이터 로딩 실패:", error);
-        alert("근무자 정보를 불러올 수 없습니다.");
+        alert("근무자 정보 또는 근무 기록을 불러올 수 없습니다.");
       } finally {
         setLoading(false);
       }
     };
-    fetchDetail();
-  }, [id]);
 
+    if (id) fetchData();
+  }, [id]);
   // ✅ [수정] 정보 수정 저장 (백엔드 PUT 연동)
   const handleSave = async (updatedInfo) => {
     try {
       // 1. 서버에 수정 요청 (PUT)
+      console.log(updatedInfo)
       await adminApi.updateUser(id, updatedInfo);
-      
       // 2. 서버 응답 성공 시 UI 상태 업데이트
       setWorkerInfo(updatedInfo);
       alert('정보가 성공적으로 수정되었습니다.');
@@ -55,7 +60,7 @@ function WorkerDetail() {
     try {
       // 1. 서버에 삭제 요청 (DELETE)
       await adminApi.deleteUser(id);
-      
+
       alert('근무자가 삭제되었습니다.');
       setIsDeleteOpen(false);
       navigate('/admin/workers'); // 목록으로 이동
@@ -65,11 +70,11 @@ function WorkerDetail() {
     }
   };
 
-  // ✅ 임시 출근 기록 (이 부분은 추후 출퇴근 API와 연동하세요)
-  const [schedules] = useState([
-    { date: '1/5', day: '(월)', time: '10:00~15:00', pay: '51,600 원' },
-    { date: '1/14', day: '(수)', time: '10:00~15:00', pay: '51,600 원' },
-  ]);
+  // // ✅ 임시 출근 기록 (이 부분은 추후 출퇴근 API와 연동하세요)
+  // const [schedules] = useState([
+  //   { date: '1/5', day: '(월)', time: '10:00~15:00', pay: '51,600 원' },
+  //   { date: '1/14', day: '(수)', time: '10:00~15:00', pay: '51,600 원' },
+  // ]);
 
   if (loading) return <p>데이터를 불러오는 중입니다...</p>;
   if (!workerInfo) return <p>근무자를 찾을 수 없습니다.</p>;

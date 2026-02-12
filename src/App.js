@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import api from './api/axios';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { setNavigator } from './router/navigation';
 import { jwtDecode } from 'jwt-decode';
 import { useAuth } from './auth/AuthContext';
-import { setAccessToken } from './auth/token';
+import { getAccessToken, setAccessToken } from './auth/token';
 
 // 컴포넌트 임포트
 import AttendanceScanPage from './pages/AttendanceScanPage'
@@ -28,20 +28,20 @@ function App() {
 
   useEffect(() => {
     const init = async () => {
-      try {
-        const res = await axios.post("/api/v1/auth/reissue", {}, { withCredentials: true });
-        const token = res.data.token;
+      if (!getAccessToken()) {
+        try {
+          const res = await api.post('/api/v1/auth/reissue')
+          const token = res.data.token;
 
-        setAccessToken(token);
-        const decoded = jwtDecode(token);
-
-        setRole(decoded.role);
-        setIsLogin(true);
-      } catch {
-        setIsLogin(false);
+          const decoded = jwtDecode(token);
+          setAccessToken(token);
+          setRole(decoded.role);
+          setIsLogin(true);
+        } catch {
+          setIsLogin(false);
+        }
       }
-    };
-
+    }
     init();
   }, []);
 
@@ -51,7 +51,7 @@ function App() {
       <Routes>
         <Route path="/test-ui" element={<MyPage />} />
         {/* 계정 및 인증 관련 라우트 */}
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage/>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login/success" element={<LoginSuccessPage />} />
         <Route path="/signup" element={<SignUpPage />} />
@@ -68,7 +68,10 @@ function App() {
             <WorkerManagement />
           </ProtectedRoute>}
         />
-        <Route path="/admin/workers/:id" element={<ProtectedRoute><WorkerDetail /></ProtectedRoute>} />
+        <Route path="/admin/workers/:id" element={
+          <ProtectedRoute>
+            <WorkerDetail />
+          </ProtectedRoute>} />
 
         {/* 정의되지 않은 경로 접근 시 초기 페이지로 리다이렉트 */}
         <Route path="*" element={<Navigate to="/" />} />

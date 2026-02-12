@@ -4,10 +4,10 @@ import { useAuth } from "../auth/AuthContext";
 // admin 용
 
 export default function ProtectedRoute({ children }) {
+    const { isLogin, role } = useAuth();
 
-    const { isLogin, role } = useAuth()
     if (!isLogin || role !== "ADMIN") {
-        return <Navigate to="/login" />;
+        return <Navigate to="/mypage" />;
     }
 
     return children;
