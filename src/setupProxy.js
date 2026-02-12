@@ -5,9 +5,12 @@ module.exports = function(app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://localhost:8080', // 팀장님이 말한 백엔드 주소
+      target: 'http://localhost:8080',
       changeOrigin: true,
-      credentials: true, // 쿠키 주고받기 허용 (핵심!)
+      pathRewrite: { '^/': '/api/' },
+      onProxyReq: (proxyReq, req) => {
+        console.log('프록시 탐:', req.url);
+      }
     })
   );
 };

@@ -2,10 +2,14 @@ import api from './axios'; // 공통 axios 인스턴스
 
 export const adminApi = {
   // 1. 전체 회원 조회 (ACTIVE 상태 유저)
-  getAllUsers: () => api.get('/api/v1/admin/users'),
+  getActiveUsers: () => api.get('/api/v1/admin/users?role=user&status=active', {
+    headers: {
+      'Authorization' : 'Bearer ' + localStorage.getItem('accessToken')
+    }
+  }),
 
   // 2. 승인 대기 회원 조회 (SUSPENDED 상태 유저)
-  getSuspendedUsers: () => api.get('/api/v1/admin/users/suspended'),
+  getSuspendedUsers: () => api.get('/api/v1/admin/users?role=user&status=suspended'),
 
   // ✅ 3. 회원 상세 조회 (추가됨)
   // 상세 페이지 진입 시 반드시 필요합니다.

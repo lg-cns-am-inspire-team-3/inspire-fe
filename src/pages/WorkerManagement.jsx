@@ -25,7 +25,7 @@ function WorkerManagement() {
     try {
       // ✅ [수정] 백엔드에서 분리한 두 개의 API를 병렬로 호출하여 성능 최적화
       const [activeRes, suspendedRes] = await Promise.all([
-        adminApi.getAllUsers(),       // 백엔드의 getActiveUsers()와 연결
+        adminApi.getActiveUsers(),       // 백엔드의 getActiveUsers()와 연결
         adminApi.getSuspendedUsers()  // 백엔드의 getSuspendedUsers()와 연결
       ]);
 
@@ -141,7 +141,7 @@ function WorkerManagement() {
 
             <div className="total-section">
               <p className="total-label">이번 달 총 급여</p>
-              <p className="total-amount"> {monthlyTotal.toLocaleString()} 원</p>
+              {/* <p className="total-amount"> {monthlyTotal.toLocaleString()} 원</p> */}
             </div>
           </div>
         </div>

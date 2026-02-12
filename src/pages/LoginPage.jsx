@@ -13,7 +13,6 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-
       const response = await axios.post('/api/v1/auth/login', {
         loginId: loginId,
         password: password
@@ -21,13 +20,15 @@ const LoginPage = () => {
         withCredentials: true //
       });
 
-      if (response.status === 200 || response.status === 204) {
+      // redirect
+      if (response.status === 200 || response.status == 204) {
         // 성공 시 페이지 이동
-        navigate('/test-ui'); 
+        navigate('/login/success');
+        console.log(response.status);
       }
     } catch (error) {
       console.error("로그인 실패:", error);
-      alert("아이디 또는 비밀번호를 확인해주세요.");
+      alert("아이디 또는 비밀번호를 확인해주세요. 아아아아아아아아아");
     }
   };
 
