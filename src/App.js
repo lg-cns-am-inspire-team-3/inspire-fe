@@ -4,9 +4,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // 1. 컴포넌트들을 불러오기
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
-import AttendanceScanPage from './pages/AttendanceManagement';
 import WorkerManagement from './pages/WorkerManagement';
 import WorkerDetail from './pages/WorkerDetail';
+import AttendanceScanPage from './pages/AttendanceScanPage';
 
 import './App.css';
 

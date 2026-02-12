@@ -133,7 +133,7 @@ function WorkerManagement() {
                     <td className="table-td">{record.name}</td>
                     <td className="table-td">{record.checkIn}</td>
                     <td className="table-td">{record.checkOut}</td>
-                    <td className="table-td">{record.paytotal}</td>
+                    <td className="table-td">{record.monthlyPay?.toLocaleString()} 원</td>
                   </tr>
                 ))}
               </tbody>
@@ -141,7 +141,7 @@ function WorkerManagement() {
 
             <div className="total-section">
               <p className="total-label">이번 달 총 급여</p>
-              <p className="total-amount">42,000,000 원</p>
+              <p className="total-amount"> {monthlyTotal.toLocaleString()} 원</p>
             </div>
           </div>
         </div>
