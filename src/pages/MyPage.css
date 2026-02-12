@@ -1,0 +1,92 @@
+/* ===== 프로필 ===== */
+
+.mypage-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+
+/* 아바타 */
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: #E8EAFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+
+/* 이름 영역 */
+.profile-name-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+}
+
+
+/* 이름 */
+.profile-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+
+/* 회원정보 수정 버튼 */
+.edit-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  padding: 5px 14px;
+  font-size: 13px;
+
+  border: 1px solid #DCDCDC;
+  border-radius: 6px;
+
+  background: #F5F5F5;
+  color: #666;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-btn:hover {
+  background: #EAEAEA;
+  border-color: #C8C8C8;
+  color: #333;
+}
+
+
+/* 시급 */
+.profile-salary {
+  margin-top: 8px;
+  font-size: 15px;
+  color: #555;
+  text-align: center;
+}
+
+
+
+
+.auth-button.secondary-btn {
+  background: #F5F5F5 !important;
+  color: #666 !important;
+  border: 1px solid #DCDCDC !important;
+}
+
+.auth-button.secondary-btn:hover {
+  background: #EAEAEA !important;
+  border-color: #C8C8C8 !important;
+  color: #333 !important;
+}

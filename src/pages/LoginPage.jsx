@@ -5,26 +5,25 @@ import logoImg from '../assets/logo.png';
 import './LoginPage.css';
 
 const LoginPage = () => {
-  
   const [loginId, setLoginId] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  
   const handleLogin = async (e) => {
-    e.preventDefault(); // 폼 제출 시 새로고침 방지
+    e.preventDefault();
 
     try {
-    
-      const response = await axios.post('https://localhost:8080/api/v1/auth/login', {
+
+      const response = await axios.post('/api/v1/auth/login', {
         loginId: loginId,
         password: password
       }, {
-        withCredentials: true 
+        withCredentials: true //
       });
 
       if (response.status === 200 || response.status === 204) {
-        navigate('/admin/workers'); 
+        // 성공 시 페이지 이동
+        navigate('/test-ui'); 
       }
     } catch (error) {
       console.error("로그인 실패:", error);
@@ -34,7 +33,6 @@ const LoginPage = () => {
 
   return (
     <div className="container">
-      
       <div className="logoArea">
         <div className="logoIcon">
           <img src={logoImg} alt="MyWork Logo" style={{ width: '80px', height: 'auto' }} />
@@ -42,7 +40,6 @@ const LoginPage = () => {
         <h1 className="logoText">MyWork</h1>
       </div>
 
-      
       <form className="inputContainer" onSubmit={handleLogin}>
         <input 
           type="text" 
@@ -58,10 +55,7 @@ const LoginPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        
-        <button type="submit" className="loginButton">
-          로그인
-        </button>
+        <button type="submit" className="loginButton">로그인</button>
       </form>
 
       <div className="linkArea">
